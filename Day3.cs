@@ -1,13 +1,21 @@
 ﻿using System.IO;
 
 // Part 1 of Day 3
+// It's done! :D
 class Day3
 {
-    static void Main(string[] args)
-    {
-        string letters = "abcdefghijklmnopqrstuvwxyz"; letters += letters.ToUpper(); letters = "0" + letters;
 
-        string[] input = File.ReadAllLines("input.txt");
+    const string letters = "0abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+    static void Main()
+    {
+        string[] input = File.ReadAllLines("./input/Day3.txt");
+        Task1(input);
+        Task2(input);
+    }
+
+    static void Task1(string[] input)
+    {
 
         int runningTotal = 0;
 
@@ -26,9 +34,28 @@ class Day3
             }
         }
 
-        Console.WriteLine("The total is: " + runningTotal);
+        Console.WriteLine("Duplicates (Task 1): " + runningTotal);
+    }
 
-        Console.ReadKey();
+    static void Task2(string[] input)
+    {
+        int runningTotal = 0;
+        for (int i = 0; i < input.Length; i+=3)
+        {
+            string alreadyChecked = "";
+            foreach (char letter in input[i])
+            {
+                if (alreadyChecked.Contains(letter)) continue;
+                if (input[i + 1].Contains(letter) && input[i + 2].Contains(letter))
+                {
+                    runningTotal += letters.IndexOf(letter);
+                    break;
+                }
+                else alreadyChecked += letter;
+            }
+        }
+
+        Console.WriteLine("Badges (Task 2): " + runningTotal);
     }
 }
 
